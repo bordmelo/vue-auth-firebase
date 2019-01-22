@@ -4,6 +4,8 @@
         <input type="text" v-model="email" placeholder="Email"><br>
         <input type="password" v-model="password" placeholder="Senha"><br>
         <button @click="login">ENTRAR</button>
+        <p>-- ou --</p>
+        <button @click="googleAuth">Entrar com o Google</button>
         <p>Não possuí conta? Realize seu <router-link to="/sign-up">cadastro</router-link></p>
     </div>
 </template>
@@ -29,6 +31,17 @@
                         alert('Oops. ' + err)
                     }
                 );
+            },
+            googleAuth: function() {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithPopup(provider).then(
+                    (user) => {
+                        this.$router.replace('home')
+                    },
+                    function (err) {
+                        alert('Oops. ' + err)
+                    }
+                )
             }
         }
     }
